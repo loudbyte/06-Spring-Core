@@ -1,5 +1,7 @@
 package com.epam.facade.impl;
 
+import com.epam.exception.BusinessExcetion;
+import com.epam.exception.NotFoundException;
 import com.epam.facade.BookingFacade;
 import com.epam.model.Event;
 import com.epam.model.Ticket;
@@ -10,8 +12,11 @@ import com.epam.service.TicketService;
 import com.epam.service.UserService;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class BookingFacadeImpl implements BookingFacade {
+
+  private final static Logger LOGGER = Logger.getLogger(BookingFacadeImpl.class.getName());
 
   private final EventService eventService;
   private final TicketService ticketService;
@@ -41,48 +46,83 @@ public class BookingFacadeImpl implements BookingFacade {
 
   @Override
   public Event createEvent(Event event) {
-    Event created = eventService.create(event);
+    Event created = null;
+    try {
+      created = eventService.create(event);
+    } catch (BusinessExcetion e) {
+      e.printStackTrace();
+    }
     return created;
   }
 
   @Override
   public Event updateEvent(Event event) {
-    return eventService.update(event);
+    try {
+      return eventService.update(event);
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   @Override
   public boolean deleteEvent(long eventId) {
-    return eventService.deleteById(eventId);
+    try {
+      return eventService.deleteById(eventId);
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 
   @Override
   public User getUserById(long userId) {
-    return null;
+    return userService.findById(userId);
   }
 
   @Override
   public User getUserByEmail(String email) {
-    return null;
+    try {
+      return userService.getByEmail(email);
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   @Override
   public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-    return null;
+    return userService.getByName(name, pageSize, pageNum);
   }
 
   @Override
   public User createUser(User user) {
-    return null;
+    try {
+      return userService.create(user);
+    } catch (BusinessExcetion e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   @Override
   public User updateUser(User user) {
-    return null;
+    try {
+      return userService.update(user);
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   @Override
   public boolean deleteUser(long userId) {
-    return false;
+    try {
+      return userService.deleteById(userId);
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 
   @Override

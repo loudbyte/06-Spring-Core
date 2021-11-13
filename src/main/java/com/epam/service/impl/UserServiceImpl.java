@@ -6,6 +6,8 @@ import com.epam.exception.NotFoundException;
 import com.epam.model.User;
 import com.epam.service.UserService;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
 
@@ -38,5 +40,20 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean deleteById(long id) throws NotFoundException {
     return userDao.delete(userDao.findById(id));
+  }
+
+  @Override
+  public User getByEmail(String email) throws NotFoundException {
+    return userDao.findAll().stream()
+        .filter(user -> Objects.equals(user.getEmail(), email))
+        .findFirst()
+        .orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
+  }
+
+  @Override
+  public List<User> getByName(String name, int pageSize, int pageNum) {
+    return userDao.findAll().stream()
+        .filter(user -> Objects.equals(user.getName(), name))
+        .collect(Collectors.toList());
   }
 }
