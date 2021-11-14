@@ -7,6 +7,7 @@ import com.epam.model.Event;
 import com.epam.model.Ticket;
 import com.epam.model.Ticket.Category;
 import com.epam.model.User;
+import com.epam.model.impl.TicketImpl;
 import com.epam.service.EventService;
 import com.epam.service.TicketService;
 import com.epam.service.UserService;
@@ -31,7 +32,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
   @Override
   public Event getEventById(long eventId) {
-    return eventService.findById(eventId);
+    return eventService.getById(eventId);
   }
 
   @Override
@@ -77,7 +78,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
   @Override
   public User getUserById(long userId) {
-    return userService.findById(userId);
+    return userService.getById(userId);
   }
 
   @Override
@@ -127,21 +128,36 @@ public class BookingFacadeImpl implements BookingFacade {
 
   @Override
   public Ticket bookTicket(long userId, long eventId, int place, Category category) {
-    return null;
+    Ticket ticket = new TicketImpl();
+    ticket.setCategory(category);
+    ticket.setUserId(userId);
+    ticket.setPlace(place);
+    ticket.setEventId(eventId);
+    try {
+      return ticketService.create(ticket);
+    } catch (BusinessExcetion e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   @Override
   public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-    return null;
+    return ticketService.getBookedTickets(user);
   }
 
   @Override
   public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-    return null;
+    return ticketService.getBookedTickets(event);
   }
 
   @Override
   public boolean cancelTicket(long ticketId) {
-    return false;
+    try {
+      return ticketService.deleteById(ticketId);
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 }

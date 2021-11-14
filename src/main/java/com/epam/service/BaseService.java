@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface BaseService<T> {
 
-  T findById(long id);
+  T getById(long id);
 
-  List<T> findAll();
+  List<T> getAll();
 
   T create(T entity) throws BusinessExcetion;
 

@@ -3,9 +3,12 @@ package com.epam.service.impl;
 import com.epam.dao.TicketDao;
 import com.epam.exception.BusinessExcetion;
 import com.epam.exception.NotFoundException;
+import com.epam.model.Event;
 import com.epam.model.Ticket;
+import com.epam.model.User;
 import com.epam.service.TicketService;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TicketServiceImpl implements TicketService {
 
@@ -16,12 +19,12 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
-  public Ticket findById(long id) {
+  public Ticket getById(long id) {
     return ticketDao.findById(id);
   }
 
   @Override
-  public List<Ticket> findAll() {
+  public List<Ticket> getAll() {
     return ticketDao.findAll();
   }
 
@@ -38,5 +41,19 @@ public class TicketServiceImpl implements TicketService {
   @Override
   public boolean deleteById(long id) throws NotFoundException {
     return ticketDao.delete(ticketDao.findById(id));
+  }
+
+  @Override
+  public List<Ticket> getBookedTickets(User user) {
+    return ticketDao.findAll().stream()
+        .filter(ticket -> ticket.getUserId() == user.getId())
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<Ticket> getBookedTickets(Event event) {
+    return ticketDao.findAll().stream()
+        .filter(ticket -> ticket.getEventId() == event.getId())
+        .collect(Collectors.toList());
   }
 }

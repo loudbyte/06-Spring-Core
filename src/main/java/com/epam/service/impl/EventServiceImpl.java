@@ -19,12 +19,12 @@ public class EventServiceImpl implements EventService {
   }
 
   @Override
-  public Event findById(long id) {
+  public Event getById(long id) {
     return eventDao.findById(id);
   }
 
   @Override
-  public List<Event> findAll() {
+  public List<Event> getAll() {
     return eventDao.findAll();
   }
 
