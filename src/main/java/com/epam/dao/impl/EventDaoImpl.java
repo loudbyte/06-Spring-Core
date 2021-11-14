@@ -5,7 +5,9 @@ import com.epam.exception.BusinessExcetion;
 import com.epam.exception.NotFoundException;
 import com.epam.model.Event;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class EventDaoImpl extends CommonDao implements EventDao {
 
   @Override

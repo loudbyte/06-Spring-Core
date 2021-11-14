@@ -11,7 +11,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class InMemoryDatabase {
 
   private static final InMemoryMap dataBase = new InMemoryMap();

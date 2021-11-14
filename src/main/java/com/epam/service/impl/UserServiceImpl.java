@@ -8,14 +8,14 @@ import com.epam.service.UserService;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
 
-  private final UserDao userDao;
-
-  public UserServiceImpl(UserDao userDao) {
-    this.userDao = userDao;
-  }
+  @Autowired
+  private UserDao userDao;
 
   @Override
   public User getById(long id) {

@@ -5,7 +5,9 @@ import com.epam.exception.BusinessExcetion;
 import com.epam.exception.NotFoundException;
 import com.epam.model.User;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserDaoImpl extends CommonDao implements UserDao {
 
   @Override
@@ -20,16 +22,16 @@ public class UserDaoImpl extends CommonDao implements UserDao {
 
   @Override
   public User create(User entity) throws BusinessExcetion {
-    database.create(entity);
+    return (User) database.create(entity);
   }
 
   @Override
   public User update(User entity) throws NotFoundException {
-    database.update(entity);
+    return (User) database.update(entity);
   }
 
   @Override
   public boolean delete(User entity) throws NotFoundException {
-    database.delete(entity);
+    return database.delete(entity);
   }
 }

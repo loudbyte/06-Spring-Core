@@ -5,7 +5,9 @@ import com.epam.exception.BusinessExcetion;
 import com.epam.exception.NotFoundException;
 import com.epam.model.Ticket;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class TicketDaoImpl extends CommonDao implements TicketDao {
 
   @Override

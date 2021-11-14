@@ -15,7 +15,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookingFacadeImpl implements BookingFacade {
 
   private final static Logger LOGGER = Logger.getLogger(BookingFacadeImpl.class.getName());

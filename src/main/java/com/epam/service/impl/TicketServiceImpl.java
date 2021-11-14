@@ -9,14 +9,14 @@ import com.epam.model.User;
 import com.epam.service.TicketService;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TicketServiceImpl implements TicketService {
 
-  private final TicketDao ticketDao;
-
-  public TicketServiceImpl(TicketDao ticketDao) {
-    this.ticketDao = ticketDao;
-  }
+  @Autowired
+  private TicketDao ticketDao;
 
   @Override
   public Ticket getById(long id) {
